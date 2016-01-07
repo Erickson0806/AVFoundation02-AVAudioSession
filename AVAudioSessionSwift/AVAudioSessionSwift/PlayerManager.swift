@@ -52,6 +52,16 @@ class PlayerManager: NSObject {
             player.rate = Float(rate)
         }
     }
+    func adjustPan(pan:Double ,forPlayerAtIndex index:Int) {
+        if index >= 0 && index < players.count {
+            players[index].pan = Float(pan)
+        }
+    }
     
+    func adjustVolume(volume:Double ,forPlayerAtIndex index:Int) {
+        if index >= 0 && index < players.count {
+            players[index].volume = Float(volume)
+        }
+    }
     
 }
