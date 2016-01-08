@@ -21,7 +21,8 @@ class PlayerManager: NSObject {
 
     var playing = false
     var players: [AVAudioPlayer]!
-    
+    weak var delegate: PlayerManageDelegate?
+
     
     
     override init() {
@@ -40,7 +41,20 @@ class PlayerManager: NSObject {
     
     
     func handleInterruption(notification: NSNotification) {
-        
+        if let info = notification.userInfo{
+            let type = info[AVAudioSessionInterruptionTypeKey] as!AVAudioSessionInterruptionType
+            
+            if type == .Began {
+                stop()
+                delegate?.playbackStopped()
+            }else {
+                let options = info[AVAudioSessionInterruptionOptionKey] as! AVAudioSessionInterruptionOptions
+                if options == .ShouldResume {
+                    play()
+                    delegate?.playbackBegan()
+                }
+            }
+        }
     }
     
     func handleRouteChange(notification: NSNotification) {
