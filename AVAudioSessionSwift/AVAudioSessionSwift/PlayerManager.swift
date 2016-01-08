@@ -8,10 +8,44 @@
 
 import UIKit
 import AVFoundation
+
+protocol PlayerManageDelegate :class {
+    func playbackStopped()
+    func playbackBegan()
+}
+
+
+
+
 class PlayerManager: NSObject {
 
     var playing = false
     var players: [AVAudioPlayer]!
+    
+    
+    
+    override init() {
+        super.init()
+        let guitarPlayer = playerForFile("guitar")
+        let bassPlayer = playerForFile("bass")
+        let drumsPlayer = playerForFile("drums")
+        players = [guitarPlayer,bassPlayer,drumsPlayer]
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleInterruption:", name: AVAudioSessionInterruptionNotification, object: AVAudioSession.sharedInstance())
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleRouteChange:", name: AVAudioSessionInterruptionNotification, object: AVAudioSession.sharedInstance())
+
+        
+    }
+    
+    
+    func handleInterruption(notification: NSNotification) {
+        
+    }
+    
+    func handleRouteChange(notification: NSNotification) {
+        
+    }
 
     func playerForFile(name:String) -> AVAudioPlayer {
         
@@ -63,5 +97,12 @@ class PlayerManager: NSObject {
             players[index].volume = Float(volume)
         }
     }
+    
+}
+
+
+
+
+extension PlayerManager:AVAudioPlayerDelegate {
     
 }

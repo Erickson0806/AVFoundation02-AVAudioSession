@@ -23,3 +23,16 @@ class ViewController: UIViewController {
 
 }
 
+
+
+
+
+extension ViewController :PlayerManageDelegate {
+    func playbackBegan() {
+        
+    }
+    
+    func playbackStopped() {
+        
+    }
+}
