@@ -39,7 +39,7 @@ class PlayerManager: NSObject {
         
     }
     
-    
+    //来电话等打断操作
     func handleInterruption(notification: NSNotification) {
         if let info = notification.userInfo{
             let type = info[AVAudioSessionInterruptionTypeKey] as!AVAudioSessionInterruptionType
@@ -56,9 +56,20 @@ class PlayerManager: NSObject {
             }
         }
     }
-    
+    //拔出耳机等线路改变等操作
     func handleRouteChange(notification: NSNotification) {
-        
+        if let info = notification.userInfo {
+            let reason = info[AVAudioSessionRouteChangeNotification] as! AVAudioSessionRouteChangeReason
+            if reason == .OldDeviceUnavailable {
+                let previousRoute = info[AVAudioSessionRouteChangePreviousRouteKey] as! AVAudioSessionRouteDescription
+                let previousOutput = previousRoute.outputs.first!
+                
+                if previousOutput.portType == AVAudioSessionPortHeadphones {
+                    stop()
+                    delegate?.playbackStopped()
+                }
+            }
+        }
     }
 
     func playerForFile(name:String) -> AVAudioPlayer {
