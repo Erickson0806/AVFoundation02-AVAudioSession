@@ -36,7 +36,6 @@ class PlayerManager: NSObject {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleInterruption:", name: AVAudioSessionInterruptionNotification, object: AVAudioSession.sharedInstance())
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleRouteChange:", name: AVAudioSessionInterruptionNotification, object: AVAudioSession.sharedInstance())
 
-        
     }
     
     //来电话等打断操作
