@@ -22,7 +22,7 @@ class PlayerManager: NSObject {
     var playing = false
     var players: [AVAudioPlayer]!
     weak var delegate: PlayerManageDelegate?
-
+  
     
     
     override init() {
@@ -101,6 +101,8 @@ class PlayerManager: NSObject {
             for player in players {
                 player.stop()
                 player.currentTime = 0.0
+                player.currentTime = 0.0
+
             }
             playing = false
         }
